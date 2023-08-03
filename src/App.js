@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import CurrentLocation from "./components/CurrentLocation";
+import SearchLocation from "./components/SearchLocation";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+<div className="dashboard">
+  <div className="container">
+    <div className="weather-box">
+      <div className="row gx-0">
+        <div className="col-lg-7">
+          <CurrentLocation></CurrentLocation>
+        </div>
+        <div className="col-lg-5">
+           <SearchLocation></SearchLocation>
+        </div>
+      </div>
     </div>
-  );
+  </div>
+</div>
+)
+
 }
 
 export default App;
