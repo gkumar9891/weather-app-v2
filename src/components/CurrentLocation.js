@@ -27,11 +27,9 @@ let getLocationPromise = () => new Promise((resolve, reject) => {
 })
 
 useEffect(() => {
-  setTimeout(setCurrentTime(new Date()), 1000);
-}, [currentTime])
-
-useEffect(() => {
-   getLocationPromise().then(async (coords) => { 
+  setInterval(() => setCurrentTime(new Date()), 1000); 
+  
+  getLocationPromise().then(async (coords) => { 
    const weatherRes = await weatherService.getUsingCoord([coords.latitude, coords.longitude]);
    setWeather(weatherRes);
   }).catch((error) => {
