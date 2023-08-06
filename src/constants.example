@@ -1,0 +1,4 @@
+//rename constants.example to constants.js and replace the values
+
+export const API_ID="API_ID_HERE";
+export const WEATHER_API_URL="API_URL_HERE"
