@@ -8,7 +8,6 @@ export const weatherApi = axios.create({
 weatherApi.interceptors.response.use((response) => {
    return response
 }, (error) => {
-   debugger
    if(error.response)
       alert(error.response.data.message)
    else if(error.request)
