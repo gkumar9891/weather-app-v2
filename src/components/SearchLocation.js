@@ -1,4 +1,19 @@
-const SearchLocation = () => {
+import { useRef, useState } from "react";
+import weatherService from "../services/weather";
+
+
+const SearchLocation = ({ weather, setWeather } ) => {
+    const [city, setCity] = useState("");
+
+    const handleCitySearch = async () => {
+      try{
+        const data = await weatherService.getUsingCityName(city);
+        setWeather(data);
+      } catch(error) {
+         console.log(error);
+      }
+    }
+
     return (
         <div className="weather-content2">
             <div className="weather-info">
@@ -24,15 +39,20 @@ const SearchLocation = () => {
                 <path d="M171.918,179.419c-1.919,0-3.839-0.732-5.303-2.197l-17.243-17.243c-2.929-2.929-2.929-7.678,0-10.606  c2.929-2.929,7.678-2.929,10.606,0l17.243,17.243c2.929,2.929,2.929,7.678,0,10.606  C175.757,178.687,173.838,179.419,171.918,179.419z" />
                 <path d="M52.952,60.452c-1.919,0-3.839-0.732-5.303-2.197L30.406,41.013c-2.929-2.929-2.929-7.677,0-10.606  c2.929-2.929,7.678-2.93,10.606,0l17.243,17.242c2.929,2.929,2.929,7.677,0,10.606C56.791,59.72,54.872,60.452,52.952,60.452z" />
               </svg>
-              <p className="weather-name">Haze</p>
+              <p className="weather-name">{Object.keys(weather).length && weather.weather[0].main}</p>
             </div>
             <div className="search">
-              <form className="form" action="">
+              <form className="form" onSubmit={async (e) => {
+                e.preventDefault()
+                await handleCitySearch();
+              }}>
                 <div className="wrapper d-flex">
                   <input
                     className="form-control"
                     type="text"
                     placeholder="Search any City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
                   />
                   <button type="submit">
                     <svg
@@ -48,7 +68,11 @@ const SearchLocation = () => {
               </form>
             </div>
             <p className="text-center">
-              London, GB
+              { Object.keys(weather).length && 
+                <>
+                  {weather.name}, {weather.sys.country}
+                </>
+              }
               <svg
                 width={25}
                 height={25}
@@ -73,20 +97,22 @@ const SearchLocation = () => {
                 <path d="M52.952,60.452c-1.919,0-3.839-0.732-5.303-2.197L30.406,41.013c-2.929-2.929-2.929-7.677,0-10.606  c2.929-2.929,7.678-2.93,10.606,0l17.243,17.242c2.929,2.929,2.929,7.677,0,10.606C56.791,59.72,54.872,60.452,52.952,60.452z" />
               </svg>
             </p>
-            <ul className="list">
-              <li>
-                tempreture <span className="float-end">13 c(clouds)</span>
-              </li>
-              <li>
-                Humidity <span className="float-end">65%</span>
-              </li>
-              <li>
-                Visibility <span className="float-end">10000ml</span>
-              </li>
-              <li>
-                Wind Speed <span className="float-end">5 km/h</span>
-              </li>
-            </ul>
+            { Object.keys(weather).length && 
+              <ul className="list">
+                <li>
+                  Tempreture <span className="float-end">{weather.main.temp} <sup>o</sup>c ({weather.weather[0].main})</span>
+                </li>
+                <li>
+                  Humidity <span className="float-end">{weather.main.humidity}%</span>
+                </li>
+                <li>
+                  Visibility <span className="float-end">{weather.visibility}ml</span>
+                </li>
+                <li>
+                  Wind Speed <span className="float-end">{weather.wind.speed} km/h</span>
+                </li>
+              </ul>
+            }
           </div>
     )
 }
