@@ -12,6 +12,16 @@ class Weather {
             }
         }).then(res => res.data)
     }
+    
+    getUsingCityName(name) {
+        return weatherApi('weather', {
+            params: {
+                q: name,
+                appid: APP_ID,
+                units: 'metric'
+            }
+        }).then(res => res.data)
+    }
 }
 
 export default new Weather();
