@@ -80,3 +80,9 @@
     filter: invert(1);
     width: 22px;
 }
+
+@media (max-width: 991px) {
+    .weather-box .weather-content2 {
+      border-left: 0;
+    }
+}
